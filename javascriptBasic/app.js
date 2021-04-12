@@ -51,7 +51,7 @@ const obj = {
 for (const [key, value] of Object.entries(obj)) {
 	console.log(`object ${value} is in position ${key}`);
 }
-excercise 8 & 9
+// excercise 8 & 9
 
 function calculate(result, val1, val2) {
 	if (result === 'sum' && val1 + val2) {
