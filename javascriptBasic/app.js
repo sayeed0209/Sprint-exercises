@@ -1,24 +1,24 @@
-// excercise  1
+// exercise  1
 
 console.log('Hello World');
 
-// excercise 2
+// exercise 2
 
 alert('My name is Sayeed');
 
-// excercise 3
+// exercise 3
 
 const firstName = 'Abu';
 const lastName = 'Sayeed';
 console.log(`${firstName} ${lastName}`);
 
-// excercise 4
+// exercise 4
 
 const num1 = 15;
 const num2 = 18;
 console.log(`Sum of num1 and num2 is: ${num1 + num2}`);
 
-// excercise 5
+// exercise 5
 
 const exam_note = 5;
 
@@ -32,14 +32,14 @@ function result(exam_note) {
 
 result(5);
 
-// excercise 6
+// exercise 6
 
 const car = 'I have a blue car';
 console.log(car.replace('blue', 'green'));
 const regex = /blue/i;
 console.log(car.replace(regex, 'green'));
 
-// excercise 7
+// exercise 7
 
 const obj = {
 	0: 'table',
@@ -51,7 +51,7 @@ const obj = {
 for (const [key, value] of Object.entries(obj)) {
 	console.log(`object ${value} is in position ${key}`);
 }
-// excercise 8 & 9
+// exercise 8 & 9
 
 function calculate(result, val1, val2) {
 	if (result === 'sum' && val1 + val2) {
