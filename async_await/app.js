@@ -19,79 +19,60 @@ let salaries = [
 	{ id: 3, salary: 2000 },
 ];
 
-const getEmployee = id => {
-	return new Promise((resolve, reject) => {
-		const result = employees.find(employee => {
-			if (employee.id === id) {
-				return employee;
-			}
-		});
-		resolve(result);
-	});
-};
-
-getEmployee(2).then(msg => {
-	console.log(msg);
-});
-// const getEmployee = async id => {
-// 	const result = employees.find(employee => {
-// 		if (employee.id === id) {
-// 			return employee;
-// 		}
-// 	});
-// 	return result;
-// };
-
-const getSlaray = person => {
-	const employeeSalary = salaries.find(salary => {
-		if (salary.id === person.id) {
-			return salary.salary;
+const getEmployee = async id => {
+	return await new Promise((resolve, reject) => {
+		const result = employees.find(employee => employee.id === id);
+		if (!result) {
+			reject('No employee found for id:' + id);
+		} else {
+			resolve(result);
 		}
 	});
-
-	return employeeSalary;
 };
+console.log(
+	getEmployee(1)
+		.then(res => console.log(res))
+		.catch(err => console.log(err))
+);
 
-console.log(getSlaray({ id: 1 }));
+const getSlaray = async employeeObj => {
+	return await new Promise((resolve, reject) => {
+		const result = salaries.find(salaryArr => salaryArr.id === employeeObj.id);
+		if (!result) {
+			reject('No salary found with object id:' + employeeObj.id);
+		} else {
+			resolve(
+				'The salaray of the employee number ' +
+					result.id +
+					' is: ' +
+					result.salary
+			);
+		}
+	});
+};
+console.log(
+	getSlaray({ id: 1 })
+		.then(res => console.log(res))
+		.catch(err => console.log(err))
+);
+console.log(
+	getSlaray({ id: 77, name: 'tim cook' })
+		.then(res => console.log(res))
+		.catch(err => console.log(err))
+);
 
+// exercise 3
 const employeeSummary = async id => {
 	const employeeData = {};
-	// employeeData.salary = await getSlaray({ id });
-	// employeeData.name = await getEmployee(id);
-	await Promise.all([getSlaray({ id }), getEmployee(id)]).then(res => {
-		console.log((employeeData.salary = res[0].salary));
-		console.log((employeeData.name = res[1].name));
-	});
+	employeeData.salary = await getSlaray({ id });
+	employeeData.name = await getEmployee(id);
+
 	return employeeData;
 };
 
 console.log(employeeSummary(1));
-// console.log(
-// 	employeeSummary(1).then(msg => {
-// 		console.log(msg.name.name);
-// 		console.log(msg.salary.salary);
-// 	})
-// );
-// const add = id => {
-// 	const res = employees.filter(name => {
-// 		// console.log(e.id === id);
-// 		const res1 = salaries.filter(salary => {
-// 			// console.log(s.id === id && e.id === id);
-// 			if (salary.id === id && name.id === id) {
-// 				console.log(salary.salary, name.name);
-// 				return salary.salary, name.name;
-// 			}
-// 		});
-// 		console.log(res1);
-// 	});
-// 	console.log(res.name);
-// };
-
-// console.log(add(1));
-
-// const log = console.log;
-// const names = ['Archer', 'Lana', 'Cyril', 'Pam', 'Beron'];
-// let pos = names.indexOf('Pam');
-// log(pos, names[pos]);
-// // remove
-// names.splice(pos, 1);
+console.log(
+	employeeSummary(1).then(msg => {
+		console.log('Name:' + msg.name.name + ' , ' + 'Salray: ' + msg.salary);
+	})
+);
