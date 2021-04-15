@@ -38,6 +38,7 @@ const sayName = () => {
 };
 
 greetings('hello', sayName());
+
 // exercise 3
 let employees = [
 	{
