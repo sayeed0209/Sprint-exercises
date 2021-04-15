@@ -29,6 +29,16 @@ randomFunc()
 	});
 
 // exercise 2
+const greetings = (msg, callback) => {
+	console.log(msg);
+	callback;
+};
+const sayName = () => {
+	console.log('My name is sayeed');
+};
+
+greetings('hello', sayName());
+// exercise 3
 let employees = [
 	{
 		id: 1,
