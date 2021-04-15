@@ -60,29 +60,47 @@ let salaries = [
 ];
 
 const getEmployees = id => {
-	const result = employees.find(value => {
-		if (value.id === id) {
-			return value;
+	return new Promise((resolve, reject) => {
+		const result = employees.find(value => value.id === id);
+		if (!result) {
+			reject('No employees found with id :' + id);
 		} else {
-			return;
+			resolve(result);
 		}
 	});
-	return result.name;
 };
-const getSalary = employeeId => {
-	const employeeSalary = salaries.find(salary => {
-		if (salary.id === employeeId) {
-			return salary;
+getEmployees(1)
+	.then(result => {
+		console.log(result);
+	})
+	.catch(err => {
+		console.log(err);
+	});
+
+const getSalary = employeeObj => {
+	return new Promise((resolve, reject) => {
+		const result = salaries.find(salary => salary.id === employeeObj.id);
+		if (!result) {
+			reject('No salray found for object with id: ' + employeeObj.id);
+		} else {
+			resolve(result);
 		}
 	});
-	return employeeSalary;
 };
 
-console.log(getEmployees(1));
-console.log(getSalary(1));
+getSalary({
+	id: 1,
+	name: 'Linux Torvalds',
+})
+	.then(res => {
+		console.log(res);
+	})
+	.catch(err => {
+		console.log(err);
+	});
 
 // exercise 3 and 4
-Promise.all([getSalary(1), getEmployees(1), Promise.reject(555)])
+Promise.all([getSalary({ id: 1 }), getEmployees(1), Promise.reject(555)])
 	.then(values => {
 		console.log(values);
 	})
