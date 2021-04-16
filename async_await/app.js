@@ -19,8 +19,8 @@ let salaries = [
 	{ id: 3, salary: 2000 },
 ];
 
-const getEmployee = async id => {
-	return await new Promise((resolve, reject) => {
+const getEmployee = id => {
+	return new Promise((resolve, reject) => {
 		const result = employees.find(employee => employee.id === id);
 		if (!result) {
 			reject('No employee found for id:' + id);
@@ -29,14 +29,8 @@ const getEmployee = async id => {
 		}
 	});
 };
-console.log(
-	getEmployee(1)
-		.then(res => console.log(res))
-		.catch(err => console.log(err))
-);
-
-const getSlaray = async employeeObj => {
-	return await new Promise((resolve, reject) => {
+const getSalary = employeeObj => {
+	return new Promise((resolve, reject) => {
 		const result = salaries.find(salaryArr => salaryArr.id === employeeObj.id);
 		if (!result) {
 			reject('No salary found with object id:' + employeeObj.id);
@@ -50,21 +44,11 @@ const getSlaray = async employeeObj => {
 		}
 	});
 };
-console.log(
-	getSlaray({ id: 1 })
-		.then(res => console.log(res))
-		.catch(err => console.log(err))
-);
-console.log(
-	getSlaray({ id: 77, name: 'tim cook' })
-		.then(res => console.log(res))
-		.catch(err => console.log(err))
-);
 
 // exercise 3
 const employeeSummary = async id => {
 	const employeeData = {};
-	employeeData.salary = await getSlaray({ id });
+	employeeData.salary = await getSalary({ id });
 	employeeData.name = await getEmployee(id);
 
 	return employeeData;
@@ -76,3 +60,28 @@ console.log(
 		console.log('Name:' + msg.name.name + ' , ' + 'Salray: ' + msg.salary);
 	})
 );
+
+const getEmployeeData = async () => {
+	try {
+		const employee = await getEmployee(1);
+		const salary = await getSalary({ id: 1 });
+		console.log(employee);
+		console.log(salary);
+	} catch (err) {
+		console.log(err);
+	}
+};
+getEmployeeData();
+
+// // exercise 4
+const annonymus = async callback => {
+	console.log('im outside of set time out');
+	setTimeout(() => {
+		callback();
+		console.log('im inside of set time out');
+	}, 2000);
+};
+const sum = () => {
+	console.log(2 + 2);
+};
+console.log(annonymus(sum));
