@@ -2,15 +2,15 @@
 let employees = [
 	{
 		id: 1,
-		name: 'Linux Torvalds',
+		name: "Linux Torvalds",
 	},
 	{
 		id: 2,
-		name: 'Bill Gates',
+		name: "Bill Gates",
 	},
 	{
 		id: 3,
-		name: 'Jeff Bezos',
+		name: "Jeff Bezos",
 	},
 ];
 let salaries = [
@@ -19,31 +19,43 @@ let salaries = [
 	{ id: 3, salary: 2000 },
 ];
 
-const getEmployee = id => {
-	return new Promise((resolve, reject) => {
-		const result = employees.find(employee => employee.id === id);
-		if (!result) {
-			reject('No employee found for id:' + id);
-		} else {
-			resolve(result);
-		}
-	});
+const getEmployee = async id => {
+	const result = employees.find(employee => employee.id === id);
+	if (!result) {
+		return await Promise.reject("No employee found for id:" + id);
+		// console.log("No employee found for id:" + id);
+	} else {
+		return await Promise.resolve(result);
+		// console.log(result);
+	}
 };
-const getSalary = employeeObj => {
-	return new Promise((resolve, reject) => {
-		const result = salaries.find(salaryArr => salaryArr.id === employeeObj.id);
-		if (!result) {
-			reject('No salary found with object id:' + employeeObj.id);
-		} else {
-			resolve(
-				'The salaray of the employee number ' +
-					result.id +
-					' is: ' +
-					result.salary
-			);
-		}
-	});
+// console.log(
+// 	getEmployee(1)
+// 		.then(value => console.log(value))
+// 		.catch(err => console.log(err))
+// );
+
+const getSalary = async employeeObj => {
+	const result = salaries.find(salaryArr => salaryArr.id === employeeObj.id);
+	if (!result) {
+		return await Promise.reject(
+			"No salary found with object id:" + employeeObj.id
+		);
+	} else {
+		return await Promise.resolve(
+			"The salaray of the employee number " +
+				result.id +
+				" is: " +
+				result.salary
+		);
+	}
 };
+
+console.log(
+	getSalary({ id: 1 })
+		.then(value => console.log(value))
+		.catch(err => console.log(err))
+);
 
 // exercise 3
 const employeeSummary = async id => {
@@ -54,12 +66,11 @@ const employeeSummary = async id => {
 	return employeeData;
 };
 
-console.log(employeeSummary(1));
-console.log(
-	employeeSummary(1).then(msg => {
-		console.log('Name:' + msg.name.name + ' , ' + 'Salray: ' + msg.salary);
+employeeSummary(4)
+	.then(msg => {
+		console.log("Name:" + msg.name.name + " , " + "Salray: " + msg.salary);
 	})
-);
+	.catch(err => console.log(err));
 
 const getEmployeeData = async () => {
 	try {
@@ -75,10 +86,10 @@ getEmployeeData();
 
 // // exercise 4
 const annonymus = async callback => {
-	console.log('im outside of set time out');
+	console.log("im outside of set time out");
 	setTimeout(() => {
 		callback();
-		console.log('im inside of set time out');
+		console.log("im inside of set time out");
 	}, 2000);
 };
 const sum = () => {
