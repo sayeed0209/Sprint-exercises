@@ -5,13 +5,13 @@ const randomFunc = str => {
 		if (str) {
 			resolve(str);
 		} else {
-			reject('Error: Failed to resolve promise');
+			reject("Error: Failed to resolve promise");
 		}
 	});
 };
 
 // reslove promise
-randomFunc('Hello Sayeed')
+randomFunc("Hello Sayeed")
 	.then(msg => {
 		console.log(msg);
 	})
@@ -19,7 +19,7 @@ randomFunc('Hello Sayeed')
 		console.log(err);
 	});
 
-// reject promise
+// // reject promise
 randomFunc()
 	.then(msg => {
 		console.log(msg);
@@ -30,28 +30,28 @@ randomFunc()
 
 // exercise 2
 const greetings = (msg, callback) => {
-	console.log(msg);
 	callback;
 };
-const sayName = () => {
-	console.log('My name is sayeed');
+const msg = name => {
+	console.log(name);
 };
 
-greetings('hello', sayName());
+greetings(msg("My name is Sayeed"));
+greetings(msg("Hello Sayeed buenos dias"));
 
-// exercise 3
+// // exercise 3
 let employees = [
 	{
 		id: 1,
-		name: 'Linux Torvalds',
+		name: "Linux Torvalds",
 	},
 	{
 		id: 2,
-		name: 'Bill Gates',
+		name: "Bill Gates",
 	},
 	{
 		id: 3,
-		name: 'Jeff Bezos',
+		name: "Jeff Bezos",
 	},
 ];
 
@@ -70,17 +70,17 @@ let salaries = [
 	},
 ];
 
-const getEmployees = id => {
+const getEmployees = employeeId => {
 	return new Promise((resolve, reject) => {
-		const result = employees.find(value => value.id === id);
+		const result = employees.find(employee => employee.id === employeeId.id);
 		if (!result) {
-			reject('No employees found with id :' + id);
+			reject("No employees found with id :" + employeeId.id);
 		} else {
 			resolve(result);
 		}
 	});
 };
-getEmployees(1)
+getEmployees({ id: 1 })
 	.then(result => {
 		console.log(result);
 	})
@@ -92,7 +92,7 @@ const getSalary = employeeObj => {
 	return new Promise((resolve, reject) => {
 		const result = salaries.find(salary => salary.id === employeeObj.id);
 		if (!result) {
-			reject('No salray found for object with id: ' + employeeObj.id);
+			reject("No salray found for object with id: " + employeeObj.id);
 		} else {
 			resolve(result);
 		}
@@ -101,7 +101,7 @@ const getSalary = employeeObj => {
 
 getSalary({
 	id: 1,
-	name: 'Linux Torvalds',
+	name: "Linux Torvalds",
 })
 	.then(res => {
 		console.log(res);
@@ -111,7 +111,11 @@ getSalary({
 	});
 
 // exercise 3 and 4
-Promise.all([getSalary({ id: 1 }), getEmployees(1), Promise.reject(555)])
+Promise.all([
+	getSalary({ id: 1 }),
+	getEmployees({ id: 1 }),
+	Promise.reject(555),
+])
 	.then(values => {
 		console.log(values);
 	})
