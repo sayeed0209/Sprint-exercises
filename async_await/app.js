@@ -19,80 +19,53 @@ let salaries = [
 	{ id: 3, salary: 2000 },
 ];
 
-const getEmployee = async id => {
-	const result = employees.find(employee => employee.id === id);
-	if (!result) {
-		return await Promise.reject("No employee found for id:" + id);
-		// console.log("No employee found for id:" + id);
-	} else {
-		return await Promise.resolve(result);
-		// console.log(result);
-	}
-};
-// console.log(
-// 	getEmployee(1)
-// 		.then(value => console.log(value))
-// 		.catch(err => console.log(err))
-// );
-
-const getSalary = async employeeObj => {
-	const result = salaries.find(salaryArr => salaryArr.id === employeeObj.id);
-	if (!result) {
-		return await Promise.reject(
-			"No salary found with object id:" + employeeObj.id
-		);
-	} else {
-		return await Promise.resolve(
-			"The salaray of the employee number " +
-				result.id +
-				" is: " +
-				result.salary
-		);
-	}
+const getEmployee = async employeeId => {
+	const result = await employees.find(
+		employee => employee.id === employeeId.id
+	);
+	return result
+		? result
+		: "The id you are looking for not exists in the employee array";
 };
 
-console.log(
-	getSalary({ id: 1 })
-		.then(value => console.log(value))
-		.catch(err => console.log(err))
-);
+getEmployee({ id: 1 }).then(res => {
+	console.log(res);
+});
 
-// exercise 3
-const employeeSummary = async id => {
-	const employeeData = {};
-	employeeData.salary = await getSalary({ id });
-	employeeData.name = await getEmployee(id);
-
-	return employeeData;
+const getSalary = async employeeId => {
+	const result = await salaries.find(employee => employee.id === employeeId.id);
+	return result ? result : "No salary found with this id";
 };
 
-employeeSummary(4)
-	.then(msg => {
-		console.log("Name:" + msg.name.name + " , " + "Salray: " + msg.salary);
-	})
+getSalary({ id: 1 })
+	.then(value => console.log(value))
 	.catch(err => console.log(err));
 
-const getEmployeeData = async () => {
-	try {
-		const employee = await getEmployee(1);
-		const salary = await getSalary({ id: 1 });
-		console.log(employee);
-		console.log(salary);
-	} catch (err) {
-		console.log(err);
-	}
-};
-getEmployeeData();
+// exercise 3
+const employeeSummary = async employeeId => {
+	const employee = await employees.find(employee => {
+		if (employee.id === employeeId.id) {
+			return employee.name;
+		}
+	});
 
-// // exercise 4
-const annonymus = async callback => {
-	console.log("im outside of set time out");
-	setTimeout(() => {
-		callback();
-		console.log("im inside of set time out");
-	}, 2000);
+	const salray = await salaries.find(salary => {
+		if (salary.id === employeeId.id) {
+			return salary.salary;
+		}
+	});
+	return `Name: ${employee.name} and his Salary : ${salray.salary}`;
 };
-const sum = () => {
-	console.log(2 + 2);
+employeeSummary({ id: 1 }).then(res => console.log(res));
+
+// exercise 4
+
+const annonymusFunction = async () => {
+	let promise = new Promise((resolve, reject) => {
+		setTimeout(() => resolve("done!"), 2000);
+	});
+
+	return await promise;
 };
-console.log(annonymus(sum));
+
+annonymusFunction().then(res => console.log(res));
