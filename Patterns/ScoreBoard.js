@@ -26,9 +26,5 @@ class ScoreBoard {
 		return this.board.sort((p1, p2) => p2.score - p1.score);
 	}
 }
-// const p = new ScoreBoard();
-// console.log(p.join("sayeed"));
-// console.log(p.join("jafor"));
-// console.log(p.leave("jafor"));
-// console.log(p);
+
 module.exports = new ScoreBoard();
