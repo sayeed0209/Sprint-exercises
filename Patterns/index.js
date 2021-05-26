@@ -14,3 +14,35 @@ try {
 } catch (err) {
 	console.log(err.message);
 }
+
+// exe 2
+
+const ScoreBoard = require("./ScoreBoard");
+const Game = require("./Game");
+const Player = require("./Player");
+const AAGame = new Game("AA-game");
+const BBGame = new Game("BB-game");
+const sayeed = new Player("Sayeed");
+const elena = new Player("Elena");
+const robin = new Player("Robin");
+AAGame.join(sayeed);
+AAGame.join(elena);
+BBGame.join(robin);
+sayeed.win(100);
+sayeed.win(100);
+sayeed.lose(50);
+
+elena.lose(100);
+elena.win(200);
+
+robin.win(100);
+robin.win(200);
+
+console.log("AA: ", AAGame.getName());
+console.log("BB: ", BBGame.getName());
+console.log("scores: ", ScoreBoard.showScores());
+console.log(
+	`Winner: ${ScoreBoard.getWinner().name}, scores: ${
+		ScoreBoard.getWinner().score
+	}`
+);

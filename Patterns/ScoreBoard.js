@@ -19,7 +19,7 @@ class ScoreBoard {
 		return this.board;
 	}
 
-	getWinners() {
+	getWinner() {
 		return this.sort()[0];
 	}
 	sort() {
