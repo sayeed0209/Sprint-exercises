@@ -18,8 +18,8 @@ try {
 // exe 2
 
 const ScoreBoard = require("./ScoreBoard");
-const Game = require("./Game");
-const Player = require("./Player");
+const Game = require("./game/Game");
+const Player = require("./game/Player");
 const AAGame = new Game("AA-game");
 const BBGame = new Game("BB-game");
 const sayeed = new Player("Sayeed");
@@ -31,13 +31,10 @@ BBGame.join(robin);
 sayeed.win(100);
 sayeed.win(100);
 sayeed.lose(50);
-
 elena.lose(100);
 elena.win(200);
-
 robin.win(100);
 robin.win(200);
-
 console.log("AA: ", AAGame.getName());
 console.log("BB: ", BBGame.getName());
 console.log("scores: ", ScoreBoard.showScores());

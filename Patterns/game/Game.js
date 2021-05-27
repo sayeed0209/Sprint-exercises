@@ -1,4 +1,4 @@
-const ScoreBoard = require("./ScoreBoard");
+const ScoreBoard = require("../ScoreBoard");
 class Game {
 	constructor(name) {
 		this.name = name;
