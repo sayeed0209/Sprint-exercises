@@ -1,20 +1,29 @@
-const { readdirSync, readFileSync, writeFileSync } = require("fs");
-const { join } = require("path");
-const inbox = join(__dirname, "inbox");
-const outbox = join(__dirname, "outbox");
+// exe 1
+const fs = require("fs").promises;
+const path = require("path");
+const data = "hello my name is sayeed";
+const inbox = path.join(__dirname, "inbox");
+const outbox = path.join(__dirname, "outbox");
 const reverseText = str => str.split("").reverse().join("");
 
 // Read and reverse contents of text files in a directory
-try {
-	const files = readdirSync(inbox);
-	files.forEach(file => {
-		const read = readFileSync(join(inbox, file), "utf8");
-		writeFileSync(join(outbox, file), reverseText(read), "utf8");
-	});
-} catch (err) {
-	console.log(err.message);
-}
 
+async function f() {
+	try {
+		const files = await fs.readdir(inbox);
+		files.forEach(async file => {
+			const read = await fs.readFile(path.join(inbox, file), "utf8");
+			const write = await fs.writeFile(
+				path.join(outbox, file),
+				reverseText(read),
+				"utf8"
+			);
+		});
+	} catch (err) {
+		console.log(err.message);
+	}
+}
+f();
 // exe 2
 
 const ScoreBoard = require("./ScoreBoard");
