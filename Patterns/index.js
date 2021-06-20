@@ -1,7 +1,6 @@
 // exe 1
 const fs = require("fs").promises;
 const path = require("path");
-const data = "hello my name is sayeed";
 const inbox = path.join(__dirname, "inbox");
 const outbox = path.join(__dirname, "outbox");
 const reverseText = str => str.split("").reverse().join("");
@@ -22,7 +21,7 @@ async function readAndWriteReverse(dir1, dir2) {
 		console.log(err.message);
 	}
 }
-readAndWriteReverse("inbox", "outbox");
+readAndWriteReverse(inbox, outbox);
 // exe 2
 
 const ScoreBoard = require("./ScoreBoard");
