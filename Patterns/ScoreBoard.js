@@ -1,6 +1,10 @@
 class ScoreBoard {
 	constructor() {
-		this.board = [];
+		if (ScoreBoard.instance == null) {
+			this.board = [];
+			ScoreBoard.instance = this;
+		}
+		return ScoreBoard.instance;
 	}
 	join(name) {
 		this.board.push({ name, score: 0 });
@@ -27,4 +31,6 @@ class ScoreBoard {
 	}
 }
 
-module.exports = new ScoreBoard();
+const scoreBoardObj = new ScoreBoard();
+Object.freeze(scoreBoardObj);
+module.exports = scoreBoardObj;

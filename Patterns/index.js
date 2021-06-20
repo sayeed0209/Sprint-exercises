@@ -7,23 +7,22 @@ const outbox = path.join(__dirname, "outbox");
 const reverseText = str => str.split("").reverse().join("");
 
 // Read and reverse contents of text files in a directory
-
-async function f() {
+async function readAndWriteReverse(dir1, dir2) {
 	try {
-		const files = await fs.readdir(inbox);
-		files.forEach(async file => {
-			const read = await fs.readFile(path.join(inbox, file), "utf8");
+		const files = await fs.readdir(dir1);
+		for (let file of files) {
+			const readfile = await fs.readFile(path.join(dir1, file), "utf8");
 			const write = await fs.writeFile(
-				path.join(outbox, file),
-				reverseText(read),
+				path.join(dir2, file),
+				reverseText(readfile),
 				"utf8"
 			);
-		});
+		}
 	} catch (err) {
 		console.log(err.message);
 	}
 }
-f();
+readAndWriteReverse("inbox", "outbox");
 // exe 2
 
 const ScoreBoard = require("./ScoreBoard");
