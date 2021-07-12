@@ -4,6 +4,7 @@ const PORT = 8000;
 var cors = require("cors");
 const multer = require("multer");
 // middlewares
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use((req, res, next) => {
 	res.set({
@@ -14,7 +15,7 @@ app.use((req, res, next) => {
 
 app.use(
 	cors({
-		origin: "http://localhost:3000",
+		origin: "http://localhost:8000",
 		credentials: true,
 		methods: ["GET", "POST"],
 		preflightContinue: true,
@@ -43,7 +44,7 @@ const upload = multer({
 /**
  * @route configure
  * @get route for user { Object}
- * @post route for upload file 
+ * @post route for upload file
  */
 // exe 1
 app.get("/user", (req, res) => {
@@ -61,7 +62,13 @@ app.post(
 		res.status(400).send({ error: err.message });
 	}
 );
-
+app.post("/date", (req, res, next) => {
+	const date = new Date();
+	const day = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+	const time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+	console.log(req.body);
+	res.json({ day, time, username: req.body.username });
+});
 app.listen(8000, () => {
 	console.log(`app running on port ${PORT}`);
 });
