@@ -18,54 +18,69 @@ let salaries = [
 	{ id: 2, salary: 1000 },
 	{ id: 3, salary: 2000 },
 ];
-
-const getEmployee = async employeeId => {
-	const result = await employees.find(
-		employee => employee.id === employeeId.id
-	);
-	return result
-		? result
-		: "The id you are looking for not exists in the employee array";
+const getEmployee = id => {
+	const employee = employees.find(value => value.id === id);
+	return new Promise((resolve, reject) => {
+		if (!employee) {
+			reject(new Error(`Employee not found for ${id}`));
+		}
+		resolve(employee);
+	});
 };
 
-getEmployee({ id: 1 }).then(res => {
-	console.log(res);
-});
-
-const getSalary = async employeeId => {
-	const result = await salaries.find(employee => employee.id === employeeId.id);
-	return result ? result : "No salary found with this id";
-};
-
-getSalary({ id: 1 })
-	.then(value => console.log(value))
-	.catch(err => console.log(err));
-
-// exercise 3
-const employeeSummary = async employeeId => {
-	const employee = await employees.find(employee => {
-		if (employee.id === employeeId.id) {
-			return employee.name;
+const getSalary = employeeId => {
+	const salary = salaries.find(value => value.id === employeeId.id);
+	return new Promise((resolve, reject) => {
+		if (!salary) {
+			reject(new Error(`Salary not found for employee ${employeeId}`));
+		} else {
+			resolve(salary.salary);
 		}
 	});
-
-	const salray = await salaries.find(salary => {
-		if (salary.id === employeeId.id) {
-			return salary.salary;
-		}
-	});
-	return `Name: ${employee.name} and his Salary : ${salray.salary}`;
 };
-employeeSummary({ id: 1 }).then(res => console.log(res));
+const salary = async id => {
+	const employee = await employees.find(value => value);
+	const salary = await salaries.find(value => value.id === employee.id);
+	console.log(employee.name, salary.salary);
+};
+salary(1);
 
-// exercise 4
+// exercise 2
 
-const annonymusFunction = async () => {
+const sayHello = async name => {
 	let promise = new Promise((resolve, reject) => {
-		setTimeout(() => resolve("done!"), 2000);
+		setTimeout(
+			() => resolve(`${name} I say hello to you after 2 seconds `),
+			2000
+		);
 	});
 
 	return await promise;
 };
+const passGreeting = async name => {
+	return await sayHello(name);
+};
+passGreeting("Sayeed").then(res => console.log(res));
 
-annonymusFunction().then(res => console.log(res));
+// exe 3
+const sayHelloAgain = async name => {
+	let promise = new Promise((resolve, reject) => {
+		setTimeout(
+			() => resolve(`${name} I say hello to you after 2 seconds `),
+			2000
+		);
+	});
+
+	return await promise;
+};
+const passGreetingAgain = async name => {
+	try {
+		if (!name) {
+			throw new Error("you have not provided a name");
+		}
+		return await sayHelloAgain(name);
+	} catch (err) {
+		console.log({ error: err.message });
+	}
+};
+passGreetingAgain('').then(res => console.log(res));
