@@ -4,11 +4,10 @@
 })(2, 99);
 
 // nivel 2 Ejercicio 1
-const annonymus = name => {
-	return { firstName: name };
-};
-const name = annonymus("sayeed");
-console.log(name);
+const annonymus = (name => {
+	return { name: name };
+})("Sayeed");
+console.log(annonymus.name);
 
 // nivel 2 Ejercicio 2
 
@@ -29,21 +28,23 @@ console.log(persona1.decirNombre());
 
 // nivel 3 Ejercicio 1
 // // Create an object-creating function, abstracting the definition of the classes. Invoke it with different definitions
-const Color = function () {
-	this.name = "red";
-	throw new Error("Can not create an instance of an abstract class");
+const Color = function (color) {
+	this.color = color;
+	if (this.constructor === Color) {
+		throw new Error("Can not create an instance of an abstract class");
+	}
 };
 
+// can not create an instance of an abstract function
+const color = new Color("red");
+console.log(color);
+// you can add method to the abstract function and then return the result
 Color.prototype.newColor = () => {
-	return "Color name is" + this.name;
+	return "Color name is" + this.color;
 };
-// const color = new Color();
 const drawColor = function (color) {
 	this.color = color;
 };
-
 drawColor.prototype = Object.create(Color.prototype);
 const draw = new drawColor("green");
 console.log(draw);
-console.log(draw instanceof drawColor);
-console.log(draw instanceof Color);
