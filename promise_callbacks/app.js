@@ -1,44 +1,42 @@
 // exercise 1
 // Create a function that returns a Promise that invokes the resolve () function or reject () that it receives. Invoke it from the outside by passing both functions that print a different message in each case.
-const randomFunc = str => {
-	return new Promise((resolve, reject) => {
-		if (str) {
-			resolve(str);
-		} else {
-			reject("Error: Failed to resolve promise");
-		}
-	});
-};
+// const randomFunc = str => {
+// 	return new Promise((resolve, reject) => {
+// 		if (str) {
+// 			resolve(str);
+// 		} else {
+// 			reject("Error: Failed to resolve promise");
+// 		}
+// 	});
+// };
 
-// reslove promise
-randomFunc("Hello Sayeed")
-	.then(msg => {
-		console.log(msg);
-	})
-	.catch(err => {
-		console.log(err);
-	});
+// // reslove promise
+// randomFunc("Hello Sayeed")
+// 	.then(msg => {
+// 		console.log(msg);
+// 	})
+// 	.catch(err => {
+// 		console.log(err);
+// 	});
 
-// // reject promise
-randomFunc()
-	.then(msg => {
-		console.log(msg);
-	})
-	.catch(err => {
-		console.log(err);
-	});
+// // // reject promise
+// randomFunc()
+// 	.then(msg => {
+// 		console.log(msg);
+// 	})
+// 	.catch(err => {
+// 		console.log(err);
+// 	});
 
-// exercise 2
-const greetings = (msg, callback) => {
-	callback;
-};
-const msg = name => {
-	console.log(name);
-};
-
-greetings(msg("My name is Sayeed"));
-greetings(msg("Hello Sayeed buenos dias"));
-
+// // exercise 2
+// const greetings = (msg, callback) => {
+// 	callback(msg);
+// };
+// const msg = name =>
+// 	name == "sayeed"
+// 		? console.log("hello " + name)
+// 		: console.log("bye bye " + name);
+// console.log(greetings("sayeed", msg));
 // // exercise 3
 let employees = [
 	{
@@ -72,7 +70,7 @@ let salaries = [
 
 const getEmployees = employeeId => {
 	return new Promise((resolve, reject) => {
-		const result = employees.find(employee => employee.id === employeeId.id);
+		const result = employees.find(employee => employee.id === employeeId);
 		if (!result) {
 			reject("No employees found with id :" + employeeId.id);
 		} else {
@@ -80,13 +78,6 @@ const getEmployees = employeeId => {
 		}
 	});
 };
-getEmployees({ id: 1 })
-	.then(result => {
-		console.log(result);
-	})
-	.catch(err => {
-		console.log(err);
-	});
 
 const getSalary = employeeObj => {
 	return new Promise((resolve, reject) => {
@@ -99,26 +90,15 @@ const getSalary = employeeObj => {
 	});
 };
 
-getSalary({
-	id: 1,
-	name: "Linux Torvalds",
-})
-	.then(res => {
-		console.log(res);
-	})
+getEmployees(1)
+	.then(result => getSalary(result))
+	.then(salary => console.log(salary))
 	.catch(err => {
 		console.log(err);
 	});
-
-// exercise 3 and 4
-Promise.all([
-	getSalary({ id: 1 }),
-	getEmployees({ id: 1 }),
-	Promise.reject(555),
-])
-	.then(values => {
-		console.log(values);
-	})
+getEmployees(55)
+	.then(result => getSalary(result))
+	.then(salary => console.log(salary))
 	.catch(err => {
 		console.log(err);
 	});
